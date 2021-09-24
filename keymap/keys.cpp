@@ -32,7 +32,10 @@ void HandleLCtrlQ() {
 	TerminateProcessForce(processId);
 }
 
-void HandleLCtrlW() {
+bool HandleLCtrlW() {
+	if (!AllowToClose())
+		return false;
+
 	SingleKey(0x57, KEYEVENTF_KEYUP);
 	ReleaseSpecialKeys();
 

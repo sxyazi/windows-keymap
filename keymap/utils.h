@@ -9,3 +9,4 @@ bool ProcessHasExited(HANDLE hProcess);
 bool CloseForegroundWindow();
 bool MinimizeForegroundWindow();
 bool TerminateProcessForce(DWORD processId);
+bool AllowToClose();

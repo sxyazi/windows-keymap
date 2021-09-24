@@ -1,6 +1,9 @@
-#include<Windows.h>
+﻿#include <string>
 #include<stdio.h>
+#include<Windows.h>
 #include "keys.h"
+#include <Psapi.h>
+#include <Shlwapi.h>
 
 void SingleKey(WORD wVk, DWORD dwFlags) {
 	INPUT inputs[1] = {};
@@ -86,4 +89,22 @@ bool TerminateProcessForce(DWORD processId) {
 	}
 
 	return result;
+}
+
+bool AllowToClose() {
+	HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, false, ForegroundProcess());
+	if (!hProcess) return true;
+
+	wchar_t path[MAX_PATH];
+	if (!GetModuleFileNameExW(hProcess, 0, path, MAX_PATH)) return false;
+
+	wchar_t* filename = PathFindFileNameW(path);
+
+	// Microsoft Edge
+	if (wcscmp(filename, L"msedge.exe") == 0) return false;
+	// Visual Studio Code
+	else if (wcscmp(filename, L"Code.exe") == 0) return false;
+	else wprintf(L"Closed process filename: %s\n", filename);
+
+	CloseHandle(hProcess);
 }

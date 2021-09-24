@@ -22,9 +22,10 @@ LRESULT CALLBACK KeyboardProc(int code, WPARAM wParam, LPARAM lParam)
 	}
 	// Left control + W
 	if (ks->vkCode == 0x57 && wParam == WM_KEYDOWN && GetKeyState(VK_LCONTROL) & 0x8000) {
-		HandleLCtrlW();
-		return 1;
+		return HandleLCtrlW() ? 1 : CallNextHookEx(NULL, code, wParam, lParam);
 	}
+	// Left ctrl + Tab
+	//if (ks->vkCode == )
 	// Left (control or win) + Left alt + |
 	if (ks->vkCode == 0xDC &&
 		(wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN) &&
@@ -52,7 +53,7 @@ LRESULT CALLBACK KeyboardProc(int code, WPARAM wParam, LPARAM lParam)
 
 int main()
 {
-	ShowWindow(GetConsoleWindow(), SW_HIDE);
+	// ShowWindow(GetConsoleWindow(), SW_HIDE);
 	
 	MSG msg;
 	HHOOK g_Hook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProc, GetModuleHandle(NULL), 0);

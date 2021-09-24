@@ -8,5 +8,5 @@ void HandleLCtrlUp();
 
 void HandleLCtrlM();
 void HandleLCtrlQ();
-void HandleLCtrlW();
+bool HandleLCtrlW();
 void HandleLCtrlAltBar();
