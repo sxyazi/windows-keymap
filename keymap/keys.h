@@ -1,4 +1,5 @@
 #pragma once
+#define KEY_IDENTIFIER 5643061913
 
 void HandleLWinDown();
 void HandleLWinUp();
@@ -8,3 +9,4 @@ void HandleLCtrlUp();
 void HandleLCtrlM();
 void HandleLCtrlQ();
 void HandleLCtrlW();
+void HandleLCtrlAltBar();

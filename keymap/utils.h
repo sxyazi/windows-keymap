@@ -1,7 +1,11 @@
 #pragma once
 
-DWORD currentProcess();
-bool processHasExited(HANDLE hProcess);
-bool closeCurrentWindow();
-bool minimizeCurrentWindow();
-bool TerminateCurrentProcess(DWORD processId);
+void SingleKey(WORD wVk, DWORD dwFlags);
+void ReleaseSpecialKeys();
+
+DWORD ConsoleProcess();
+DWORD ForegroundProcess();
+bool ProcessHasExited(HANDLE hProcess);
+bool CloseForegroundWindow();
+bool MinimizeForegroundWindow();
+bool TerminateProcessForce(DWORD processId);

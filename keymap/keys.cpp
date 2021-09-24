@@ -1,43 +1,49 @@
 #include<Windows.h>
 #include "utils.h"
 
-void singleKey(WORD wVk, DWORD dwFlags) {
-	INPUT inputs[1] = {};
-	ZeroMemory(inputs, sizeof(inputs));
-
-	inputs[0].type = INPUT_KEYBOARD;
-	inputs[0].ki.wVk = wVk;
-	inputs[0].ki.dwFlags = dwFlags;
-	inputs[0].ki.dwExtraInfo = 3395;
-
-	SendInput(1, inputs, sizeof(INPUT));
-}
-
 void HandleLWinDown() {
-	singleKey(VK_LCONTROL, 0x0);
+	SingleKey(VK_LCONTROL, 0x0);
 }
 
 void HandleLWinUp() {
-	singleKey(VK_LCONTROL, KEYEVENTF_KEYUP);
+	SingleKey(VK_LCONTROL, KEYEVENTF_KEYUP);
 }
 
 void HandleLCtrlDown() {
-	singleKey(VK_LWIN, 0x0);
+	SingleKey(VK_LWIN, 0x0);
 }
 
 void HandleLCtrlUp() {
-	singleKey(VK_LWIN, KEYEVENTF_KEYUP);
+	SingleKey(VK_LWIN, KEYEVENTF_KEYUP);
 }
 
 void HandleLCtrlM() {
-	minimizeCurrentWindow();
+	SingleKey(0x4D, KEYEVENTF_KEYUP);
+	ReleaseSpecialKeys();
+
+	MinimizeForegroundWindow();
 }
 
 void HandleLCtrlQ() {
-	DWORD processId = currentProcess();
-	TerminateCurrentProcess(processId);
+	SingleKey(0x51, KEYEVENTF_KEYUP);
+	ReleaseSpecialKeys();
+
+	DWORD processId = ForegroundProcess();
+	TerminateProcessForce(processId);
 }
 
 void HandleLCtrlW() {
-	closeCurrentWindow();
+	SingleKey(0x57, KEYEVENTF_KEYUP);
+	ReleaseSpecialKeys();
+
+	CloseForegroundWindow();
+}
+
+void HandleLCtrlAltBar() {
+	SingleKey(0xDC, KEYEVENTF_KEYUP);
+	ReleaseSpecialKeys();
+
+	MessageBox(NULL, (LPCWSTR)L"About to stop service.", (LPCWSTR)L"Keymap", MB_OK | MB_ICONINFORMATION);
+	TerminateProcessForce(ConsoleProcess());
+	ExitProcess(0);
 }
