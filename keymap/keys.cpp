@@ -17,6 +17,15 @@ void HandleLCtrlUp() {
 	SingleKey(VK_LWIN, KEYEVENTF_KEYUP);
 }
 
+void HandleLCtrlTabDown() {
+	SingleKey(VK_LCONTROL, KEYEVENTF_KEYUP);
+	SingleKey(VK_MENU, 0x0);
+}
+
+void HandleLCtrlTabUp() {
+	SingleKey(VK_MENU, KEYEVENTF_KEYUP);
+}
+
 void HandleLCtrlM() {
 	SingleKey(0x4D, KEYEVENTF_KEYUP);
 	ReleaseSpecialKeys();
